@@ -1,66 +1,117 @@
-n8n Inbox Manager: AI Email Classifier
-An intelligent email automation workflow built with n8n that uses OpenAI and Google Gemini to monitor your Gmail inbox, categorize messages into specific buckets, and organize them automatically using Gmail labels.
+# 📧 n8n Inbox Manager: AI Email Classifier
 
-How It Works
-The workflow operates in two modes:
+An intelligent **email automation workflow built with n8n** that uses **OpenAI (GPT)** and **Google Gemini** to:
 
-Auto-Categorize New Emails: Triggers every minute to process incoming mail.
+- Monitor your Gmail inbox in real time
+- Categorize emails into smart buckets
+- Automatically organize them using Gmail labels
 
-Bulk Categorize Existing Emails: A manual trigger to process up to 12 recent emails at once.
+---
 
-Classification Logic
-Emails are analyzed based on Subject, Body, and Sender info, then assigned to one of three categories:
+## ⚙️ How It Works
 
-PRIORITY: Important communications, specific project updates (Louai-PRIORITY), or trusted senders like contact@techniverge.ca.
+The workflow runs in **two modes**:
 
-Newsletter: High-volume content, marketing updates, or specific senders like hello@alchemy.com.
+### 🔄 1. Auto-Categorize New Emails
+- Runs **every minute**
+- Processes new incoming emails automatically
 
-Subscriptions: Invoices, recurring service updates, or subscription-related keywords.
+### 📦 2. Bulk Categorize Existing Emails
+- Manual trigger
+- Processes **up to 12 recent emails at once**
 
-🛠️ Setup Instructions
-1. Prerequisites
-An n8n instance (Self-hosted or Cloud).
+---
 
-OpenAI API Key (for the primary Text Classifier).
+## 🧠 Classification Logic
 
-Google Gemini API Key (as a backup/secondary model).
+Each email is analyzed using:
 
-Gmail OAuth2 Credentials (configured in Google Cloud Console with gmail.modify scopes).
+- **Subject**
+- **Body content**
+- **Sender information**
 
-2. Import Workflow
-Download the workflows/inbox-manager.json file from this repo.
+Then it gets assigned to one of these 3 categories:
 
-In n8n, click on the Workflow menu (top right) > Import from File.
+| Category | Description |
+|---|---|
+| **PRIORITY** | Important messages, project updates *(Louai-PRIORITY)*, or trusted senders like `contact@techniverge.ca` |
+| **Newsletter** | Marketing content, high-volume updates, or senders like `hello@alchemy.com` |
+| **Subscriptions** | Invoices, recurring services, and subscription-related keywords |
 
-Select the downloaded JSON.
+---
 
-3. Critical Node Configuration (OpenAI Fix)
-To prevent JSON parsing errors in the Text Classifier node when using OpenAI:
+## 🛠️ Setup Instructions
 
-Open the OpenAI Chat Model node.
+### 1. Prerequisites
+Make sure you have:
 
-Ensure Use Responses API is toggled OFF.
+- An **n8n instance** (Cloud or Self-hosted)
+- **OpenAI API Key**
+- **Google Gemini API Key**
+- **Gmail OAuth2 Credentials** with `gmail.modify` scopes enabled
 
-This ensures the model returns a "Simple Message" that the Text Classifier can interpret correctly.
+> OAuth must be configured in **Google Cloud Console** using the `gmail.modify` permission.
 
-4. Categorization Customization
-Open the Text Classifier nodes to modify the category descriptions.
+---
 
-Note: Do not add "Return only JSON" or "No Markdown" instructions to the descriptions; the node handles this automatically. Adding them manually can break the output parser.
+### 2. Import Workflow
 
-🔧 Workflow Nodes Breakdown
-Gmail Trigger: Polls the inbox every 60 seconds.
+1. Download `workflows/inbox-manager.json` from the repo
+2. In n8n, go to:
+Workflow Menu (top-right) → Import from File
 
-Text Classifier: The "Brain" of the workflow. It maps the email data to your predefined categories.
+3. Select the downloaded JSON
 
-AI Chat Models: Provides the LLM logic (GPT-3.5/4 or Gemini) to the classifier.
+---
 
-Gmail (Add/Remove Labels): Executes the organization by applying labels and removing the "Inbox" label to archive processed mail.
+### 3. Critical OpenAI Node Fix
 
-⚠️ Known Issues & Troubleshooting
-JSON Parsing Error: If you see Expected object, received array, double-check that the OpenAI node has "Responses API" disabled.
+To avoid JSON parsing issues in the classifier:
 
-Label Not Found: Ensure the Label IDs in the Gmail nodes match the IDs in your specific Gmail account. You may need to re-select your labels after importing.
+1. Open the **OpenAI Chat Model node**
+2. Ensure:
 
-📜 License
-This project is open-source. Feel free to fork and modify for your own personal inbox management.
+- **Use Responses API → OFF**
+
+This ensures the classifier receives a **simple message output** instead of JSON arrays that break parsing.
+
+---
+
+### 4. Customize Your Categories
+
+- Open the **Text Classifier nodes**
+- Edit the **category descriptions** freely
+- **Do NOT manually add instructions like:**
+
+
+(The node already handles formatting internally and adding them manually can break parsing.)
+
+---
+
+## 🔧 Workflow Nodes Breakdown
+
+| Node | Purpose |
+|---|---|
+| **Gmail Trigger** | Checks inbox every 60 seconds |
+| **Text Classifier** | Assigns category using AI |
+| **OpenAI/Gemini Models** | Provide LLM reasoning |
+| **Add/Remove Gmail Labels** | Applies labels and archives email |
+
+---
+
+## ⚠️ Known Issues & Troubleshooting
+
+### ❗ JSON Parsing Error
+If you see:
+
+
+→ Disable **Responses API** in the OpenAI node *(see Step 3 above)*
+
+### 🏷️ Label Not Found
+→ Re-select labels after importing and ensure Label IDs match your Gmail account
+
+---
+
+## 📜 License
+
+This project is **open-source** — fork it, remix it, modify it, it’s your inbox kingdom 👑
