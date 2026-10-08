@@ -1,4 +1,4 @@
-# 📧 n8n Inbox Manager: AI Email Classifier
+#  n8n Inbox Manager: AI Email Classifier
 
 An intelligent **email automation workflow built with n8n** that uses **OpenAI (GPT)** and **Google Gemini** to:
 
@@ -8,21 +8,21 @@ An intelligent **email automation workflow built with n8n** that uses **OpenAI (
 
 ---
 
-## ⚙️ How It Works
+##  How It Works
 
 The workflow runs in **two modes**:
 
-### 🔄 1. Auto-Categorize New Emails
+### 1. Auto-Categorize New Emails
 - Runs **every minute**
 - Processes new incoming emails automatically
 
-### 📦 2. Bulk Categorize Existing Emails
+###  2. Bulk Categorize Existing Emails
 - Manual trigger
 - Processes **up to 12 recent emails at once**
 
 ---
 
-## 🧠 Classification Logic
+##  Classification Logic
 
 Each email is analyzed using:
 
@@ -99,19 +99,19 @@ This ensures the classifier receives a **simple message output** instead of JSON
 
 ---
 
-## ⚠️ Known Issues & Troubleshooting
+## Known Issues & Troubleshooting
 
-### ❗ JSON Parsing Error
+### JSON Parsing Error
 If you see:
 
 
 → Disable **Responses API** in the OpenAI node *(see Step 3 above)*
 
-### 🏷️ Label Not Found
+### Label Not Found
 → Re-select labels after importing and ensure Label IDs match your Gmail account
 
 ---
 
-## 📜 License
+## License
 
 This project is **open-source** — fork it, remix it, modify it, it’s your inbox kingdom 👑
